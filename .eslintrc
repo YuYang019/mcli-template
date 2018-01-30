@@ -11,6 +11,9 @@
     "sourceType": "module" //使用模块
   },
   "rules": { //规则
+    "indent": [
+      0
+    ],
     "no-new": [ //new的时候必须要赋给一个值
       0 //关闭规则
     ],
