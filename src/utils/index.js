@@ -58,11 +58,11 @@ export function removeClass (obj, cls) {
 	let objClass = ' ' + obj.className + ' '
 	// 将多余的空字符替换成一个空格.  ' abc    bcd ' -> ' abc bcd '
 	objClass = objClass.replace(/(\s+)/gi, ' ')
-		// 在原来的 class 替换掉首尾加了空格的 class.  ' abc bcd ' -> 'bcd '
+	// 在原来的 class 替换掉首尾加了空格的 class.  ' abc bcd ' -> 'bcd '
 	let removed = objClass.replace(' ' + cls + ' ', ' ')
-		// 去掉首尾空格.  'bcd ' -> 'bcd'
+	// 去掉首尾空格.  'bcd ' -> 'bcd'
 	removed = removed.replace(/(^\s+)|(\s+$)/g, '')
-		// 替换原来的 class
+	// 替换原来的 class
 	obj.className = removed
 }
 
@@ -80,7 +80,7 @@ export function merge (/** obj1, obj2, obj3 **/) {
 			// 如果对象有该属性，且不在原型链上
 			if (obj.hasOwnProperty(key)) {
 				// 如果待混入的值为对象，且result中对应值也为对象，则将两个对象融合后重新赋值给result[key]
-				if (_.isObject(obj[key]) && _.isObject(result[key])) {
+				if (isObject(obj[key]) && isObject(result[key])) {
 					result[key] = merge(result[key], obj[key])
 				} else {
 					// 否则直接赋值
@@ -92,42 +92,46 @@ export function merge (/** obj1, obj2, obj3 **/) {
 	return result
 }
 
-export const _ = {
-	setAttr (node, key, value) {
-		switch (key) {
-			case 'style':
-				node.style.cssText = value
-				break
-			case 'value':
-				let tagName = node.tagName || ''
-				tagName = tagName.toLowerCase()
-				if (tagName === 'input' || tagName === 'textarea') {
-					node.value = value
-				} else {
-					node.setAttribute(key, value)
-				}
-				break
-			default:
-				node.setAttribute(key, value)
-				break
-		}
-	},
-	slice (arrLike, index) {
-		return Array.prototype.slice.call(arrLike, index)
-	},
-	isArray (array) {
-		return Object.prototype.toString.call(array) === '[object Array]'
-	},
-	toArray (arrLike) {
-		return Array.from(arrLike)
-	},
-	isString (string) {
-		return Object.prototype.toString.call(string) === '[object String]'
-	},
-	isObject (obj) {
-		return typeof obj === 'object'
-	},
-	isElementNode (node) {
-		return node.nodeType === 1
-	}
+export function setAttr (node, key, value) {
+  switch (key) {
+    case 'style':
+      node.style.cssText = value
+      break
+    case 'value':
+      let tagName = node.tagName || ''
+      tagName = tagName.toLowerCase()
+      if (tagName === 'input' || tagName === 'textarea') {
+        node.value = value
+      } else {
+        node.setAttribute(key, value)
+      }
+      break
+    default:
+      node.setAttribute(key, value)
+      break
+  }
+}
+
+export function slice (arrLike, index) {
+  return Array.prototype.slice.call(arrLike, index)
+}
+
+export function isArray (array) {
+  return Object.prototype.toString.call(array) === '[object Array]'
+}
+
+export function toArray (arrLike) {
+  return Array.from(arrLike)
+}
+
+export function isString (string) {
+  return Object.prototype.toString.call(string) === '[object String]'
+}
+
+export function isObject (obj) {
+  return typeof obj === 'object'
+}
+
+export function isElementNode (node) {
+  return node.nodeType === 1
 }

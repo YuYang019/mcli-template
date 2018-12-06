@@ -1,11 +1,12 @@
 const path = require('path')
 const webpack = require('webpack')
-// const HtmlWebpackPlugin = require('html-webpack-plugin')
 
+// webpack-dev-server负责提供开发环境
 module.exports = {
   watch: true,
+  mode: 'development',
   entry: {
-    index: ['./index.js']
+    index: path.join(__dirname, './src/index.js')
   },
   output: {
     path: path.join(__dirname, '/dist'),
@@ -15,6 +16,7 @@ module.exports = {
     hot: true,
     open: true,
     inline: true,
+    compress: true,
     port: 8888
   },
   module: {
@@ -26,17 +28,11 @@ module.exports = {
           'babel-loader',
           'eslint-loader'
         ]
-      },
-      {
-        test: /\.css/,
-        loaders: [
-          'style-loader',
-          'css-loader'
-        ]
       }
     ]
   },
   plugins: [
+    // 光配置不行，还得显示的调用
     new webpack.HotModuleReplacementPlugin()
   ]
 }
